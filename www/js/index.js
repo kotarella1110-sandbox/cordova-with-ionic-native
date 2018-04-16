@@ -16,31 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+document.addEventListener('deviceready', () => {
+  // onSuccess Callback
+  // This method accepts a Position object, which contains the
+  // current GPS coordinates
+  //
+  const onSuccess = position => {
+    alert([
+      `Latitude: ${position.coords.latitude}`,
+      `Longitude: ${position.coords.longitude}`,
+      `Altitude: ${position.coords.altitude}`,
+      `Accuracy: ${position.coords.accuracy}`,
+      `Altitude Accuracy: ${position.coords.altitudeAccuracy}`,
+      `Heading: ${position.coords.heading}`,
+      `Speed: ${position.coords.speed}`,
+      `Timestamp: ${position.timestamp}`,
+    ].join('\n'));
+  };
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
+  // onError Callback receives a PositionError object
+  //
+  const onError = error => {
+    alert([
+      `code: ${error.code}`,
+      `message: ${error.message}`,
+    ].join('\n'));
+  }
 
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
-};
-
-app.initialize();
+  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}, false);
