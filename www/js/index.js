@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+import { Geolocation } from '@ionic-native/geolocation';
+
 document.addEventListener('deviceready', () => {
   // onSuccess Callback
   // This method accepts a Position object, which contains the
@@ -43,5 +46,8 @@ document.addEventListener('deviceready', () => {
     ].join('\n'));
   }
 
-  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  const geolocation = new Geolocation();
+  geolocation.getCurrentPosition()
+    .then(onSuccess)
+    .catch(onError);
 }, false);
