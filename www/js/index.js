@@ -47,7 +47,12 @@ document.addEventListener('deviceready', () => {
   }
 
   const geolocation = new Geolocation();
-  geolocation.getCurrentPosition()
+  const options = {
+    timeout: 10000,
+    enableHighAccuracy: true,
+    maximumAge: 3600
+  };
+  geolocation.getCurrentPosition(options)
     .then(onSuccess)
     .catch(onError);
 }, false);
